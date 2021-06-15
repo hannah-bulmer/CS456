@@ -7,10 +7,10 @@ def main(argv):
         print("Error: please provide req_code param")
     
     req_code = argv[0]
-    n_port = 52500
 
     serverSocket = socket(AF_INET,SOCK_STREAM)
-    serverSocket.bind(("",n_port))
+    serverSocket.bind(("",0))
+    n_port = serverSocket.getsockname()[1]
     serverSocket.listen(1)
 
     msg_socket = socket(AF_INET, SOCK_DGRAM)
