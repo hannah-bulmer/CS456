@@ -14,6 +14,7 @@ def main(argv):
     serverSocket.listen(1)
 
     msg_socket = socket(AF_INET, SOCK_DGRAM)
+    connected = False
 
     print(f"SERVER_PORT={n_port}")
     while True:
@@ -21,18 +22,28 @@ def main(argv):
         connectionSocket, addr = serverSocket.accept()
         msg = connectionSocket.recv(1024).decode()
 
+        print("Received code " ,msg)
         if msg == req_code:
             r_port = str(random.randint(2048, 25000))
+            print("Sending port")
             connectionSocket.send(r_port.encode())
             connectionSocket.close()
             print(f"Listening on {r_port}")
             msg_socket.bind(("",int(r_port)))
-
+            connected = True
+        else:
+            print("Wrong code, closing socket")
+            connectionSocket.close()
         # UDP stuff
-        message, clientAddress = msg_socket.recvfrom(2048)
-        modifiedMessage = message.decode()[::-1]
-        msg_socket.sendto(modifiedMessage.encode(),clientAddress)
-        msg_socket = socket(AF_INET, SOCK_DGRAM)
+        if connected:
+            print("Listening for new messages")
+            message, clientAddress = msg_socket.recvfrom(2048)
+            print("Message received", message)
+            modifiedMessage = message.decode()[::-1]
+            msg_socket.sendto(modifiedMessage.encode(),clientAddress)
+            msg_socket = socket(AF_INET, SOCK_DGRAM)
+            print("Returning to watching for connections")
+            connected = False
 
 if __name__ == "__main__":
     main(sys.argv[1:])

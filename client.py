@@ -27,13 +27,21 @@ def main(argv):
     # once this is received, client closes TCP connection with server
 
     clientSocket = socket(AF_INET, SOCK_STREAM)
+    print("Waiting to connect")
     clientSocket.connect((server_addr,n_port))
+    print("Sending code")
     clientSocket.send(req_code.encode())
+    
     r_port = clientSocket.recv(1024).decode()
-    print("From Server: ", r_port)
     clientSocket.close()
+    if (r_port is None or r_port is ""):
+        print("Error: wrong req code sent")
+        exit(0)
+    print("From Server: ", r_port)
+
 
     clientSocket = socket(AF_INET, SOCK_DGRAM)
+    print("Sending message to server")
     clientSocket.sendto(msg.encode(),(server_addr, int(r_port)))
     modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
     print(modifiedMessage.decode())
