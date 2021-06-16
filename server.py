@@ -24,9 +24,9 @@ def main(argv):
         print("Received code " ,msg)
         if msg == req_code:
             msg_socket.bind(("",0))
-            r_port = msg_socket.getsockname()[1]
+            r_port = str(msg_socket.getsockname()[1])
             print("Sending port")
-            connectionSocket.send(r_port)
+            connectionSocket.send(r_port.encode())
             connectionSocket.close()
             print(f"Listening on {r_port}")
             connected = True
