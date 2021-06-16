@@ -1,6 +1,5 @@
 from socket import *
 import sys
-import random
 
 def main(argv):
     if len(argv) != 1:
@@ -24,12 +23,12 @@ def main(argv):
 
         print("Received code " ,msg)
         if msg == req_code:
-            r_port = str(random.randint(2048, 25000))
+            msg_socket.bind(("",0))
+            r_port = msg_socket.getsockname()[1]
             print("Sending port")
             connectionSocket.send(r_port.encode())
             connectionSocket.close()
             print(f"Listening on {r_port}")
-            msg_socket.bind(("",int(r_port)))
             connected = True
         else:
             print("Wrong code, closing socket")
