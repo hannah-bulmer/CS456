@@ -34,7 +34,7 @@ def main(argv):
     
     r_port = clientSocket.recv(1024).decode()
     clientSocket.close()
-    if (r_port is None or r_port is ""):
+    if (r_port is None or r_port == ""):
         print("Error: wrong req code sent")
         exit(0)
     print("From Server: ", r_port)
