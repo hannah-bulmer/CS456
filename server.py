@@ -26,7 +26,7 @@ def main(argv):
             msg_socket.bind(("",0))
             r_port = msg_socket.getsockname()[1]
             print("Sending port")
-            connectionSocket.send(r_port.encode())
+            connectionSocket.send(r_port)
             connectionSocket.close()
             print(f"Listening on {r_port}")
             connected = True
