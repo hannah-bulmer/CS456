@@ -96,8 +96,11 @@ def main(args):
                     print(packets_acked, num_unacked)
                     assert(packets_acked <= num_unacked)
                     num_unacked -= packets_acked
+
+                    prev_n = N
                     N = 10 if N == 10 else N + 1
-                    log_n(timestamp,N)
+                    if N != prev_n:
+                        log_n(timestamp,N)
 
                     if num_unacked > 0:
                         timer = datetime.now()
