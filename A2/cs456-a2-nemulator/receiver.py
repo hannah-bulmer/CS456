@@ -56,7 +56,7 @@ def main(args):
                 print(f"Buffering {data[0:30]}")
                 buffer[seqnum] = data
             if seqnum - 1 in buffer:
-                buffer.pop(seqnum)
+                buffer.pop(seqnum-1)
             assert(len(buffer) <= 10)
             send_ack_packet(recv_socket, cur_seqnum, args.host,args.emulatorPort)
 
