@@ -39,17 +39,17 @@ def main(args):
                     break
             elif num_unacked < N and data != None:
                 # send packet
-                timestamp += 1
 
                 packet = Packet(1, seqnum, length, data.decode())
                 print(f"Sending {data.decode()[0:30]}")
                 send_socket.sendto(packet.encode(), (args.host,args.emulatorPort))
 
+                timestamp += 1
+                log_seqnum(timestamp, seqnum)
+
                 # packet sent, we can move on to sending next piece of data
                 packets[seqnum] = packet
                 data = None
-
-                log_seqnum(timestamp, seqnum)
 
                 seqnum = (seqnum + 1) % 32
                 num_unacked += 1
@@ -90,7 +90,7 @@ def main(args):
                 print(f"New ack? {is_between(ack_seqnum, seqnum - num_unacked, seqnum)}")
                 log_ack(timestamp, ack_seqnum)
 
-                # check if it's a new ACK - check this
+                # check if it's a new ACK
                 if is_between(ack_seqnum, seqnum - num_unacked, seqnum):
                     packets_acked = 1 + ack_seqnum - (seqnum - num_unacked) % 32
                     print(packets_acked, num_unacked)
