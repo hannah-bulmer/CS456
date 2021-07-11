@@ -17,8 +17,7 @@ def main(args):
     recv_socket = socket(AF_INET, SOCK_DGRAM)
     recv_socket.bind(("", args.recvPort))
 
-    raw = open(args.file, "w")
-    raw.close()
+    reset_files()
     
     print("Ready to receive data from emulator")
     while True:
@@ -69,8 +68,15 @@ def send_eot_packet(recv_socket, cur_seqnum, host,ePort):
 
 
 def log(seqnum):
-    with open("arrival.log", "w") as file:
-        file.write(f"{seqnum}")
+    with open("arrival.log", "a") as file:
+        file.write(f"{seqnum}\n")
+
+
+def reset_files():
+    raw = open(args.file, "w")
+    raw.close()
+    raw = open("arrival.log", "w")
+    raw.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

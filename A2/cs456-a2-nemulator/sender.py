@@ -14,6 +14,8 @@ def main(args):
     timestamp = 0
     data = None
 
+    reset_files()
+
     log_n(timestamp,N)
 
     send_socket = socket(AF_INET, SOCK_DGRAM)
@@ -27,10 +29,13 @@ def main(args):
                 data = file.read(500)
                 length = len(data)
             if data == b'':
-                print(f"Sending eot with seqnum {seqnum}")
-                send_eot_packet(send_socket, seqnum,args.host,args.emulatorPort)
                 print(f"Waiting for {num_unacked} acks still")
                 if num_unacked == 0: # check this
+                    print(f"Sending eot with seqnum {seqnum}")
+                    timestamp += 1
+                    log_seqnum(timestamp, seqnum)
+
+                    send_eot_packet(send_socket, seqnum,args.host,args.emulatorPort)
                     break
             elif num_unacked < N and data != None:
                 # send packet
@@ -106,26 +111,34 @@ def main(args):
 
 def log_n(time, N):
     print(f"t={time} N={N}")
-    with open("N.log", "w") as file:
-        file.write(f"t={time} {N}")
+    with open("N.log", "a") as file:
+        file.write(f"t={time} {N}\n")
 
 
 def log_seqnum(time, seqnum):
     # print(f"t={time} seqnum={seqnum}")
-    with open("seqnum.log", "w") as file:
-        file.write(f"t={time} {seqnum}")
+    with open("seqnum.log", "a") as file:
+        file.write(f"t={time} {seqnum}\n")
 
 
 def log_ack(time, seqnum):
     # print(f"t={time} ack={seqnum}")
-    with open("ack.log", "w") as file:
-        file.write(f"t={time} {seqnum}")
+    with open("ack.log", "a") as file:
+        file.write(f"t={time} {seqnum}\n")
 
 
 def send_eot_packet(send_socket, seqnum,host,ePort):
     eot = Packet(2, seqnum, 0, "")
     send_socket.sendto(eot.encode(), (host, ePort))
 
+
+def reset_files():
+    raw = open("N.log", "w")
+    raw.close()
+    raw = open("ack.log", "w")
+    raw.close()
+    raw = open("seqnum.log", "w")
+    raw.close()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
