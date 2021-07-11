@@ -42,7 +42,7 @@ def main(args):
                 timestamp += 1
 
                 packet = Packet(1, seqnum, length, data.decode())
-                print("Sending packet")
+                print(f"Sending {data.decode()[0:30]}")
                 send_socket.sendto(packet.encode(), (args.host,args.emulatorPort))
 
                 # packet sent, we can move on to sending next piece of data
@@ -66,6 +66,8 @@ def main(args):
                 # retransmit problem packet
                 problem_seq = (seqnum - num_unacked) % 32
                 unacked_packet = packets[problem_seq]
+                a,b,c, bad_data = unacked_packet.decode()
+                print(f"Sending {bad_data[0:30]}")
                 send_socket.sendto(unacked_packet.encode(), (args.host,args.emulatorPort))
 
                 timer = datetime.now()
@@ -83,12 +85,13 @@ def main(args):
             if (typ == 0):
                 print(f"ACK received for {ack_seqnum}")
                 print(f"Num unacked: {num_unacked}")
+                print(f"Seqnum var: {seqnum}")
                 print(f"Current seqnum: {(seqnum - num_unacked) % 32}")
-                print(f"New ack? {(seqnum - num_unacked) % 32 <= ack_seqnum}")
+                print(f"New ack? {is_between(ack_seqnum, seqnum - num_unacked, seqnum)}")
                 log_ack(timestamp, ack_seqnum)
 
                 # check if it's a new ACK - check this
-                if (seqnum - num_unacked) % 32 <= ack_seqnum:
+                if is_between(ack_seqnum, seqnum - num_unacked, seqnum):
                     packets_acked = 1 + ack_seqnum - (seqnum - num_unacked) % 32
                     print(packets_acked, num_unacked)
                     assert(packets_acked <= num_unacked)
@@ -139,6 +142,20 @@ def reset_files():
     raw.close()
     raw = open("seqnum.log", "w")
     raw.close()
+
+
+# if a is between b and c
+def is_between(a,b,c):
+    a = a % 32
+    b = b % 32
+    c = c % 32
+    if a < b:
+        if a <= c and c < b: return True
+        return False
+    else:
+        if b < c and c <= a: return False
+        return True
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
