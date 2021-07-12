@@ -41,7 +41,6 @@ def main(args):
                 # send packet
 
                 packet = Packet(1, seqnum, length, data.decode())
-                print(f"Sending {data.decode()[0:30]}")
                 send_socket.sendto(packet.encode(), (args.host,args.emulatorPort))
 
                 timestamp += 1
@@ -61,13 +60,10 @@ def main(args):
                 N = 1
                 log_n(timestamp,N)
 
-                print("Timeout, resending packet")
-
                 # retransmit problem packet
                 problem_seq = (seqnum - num_unacked) % 32
                 unacked_packet = packets[problem_seq]
                 a,b,c, bad_data = unacked_packet.decode()
-                print(f"Sending {bad_data[0:30]}")
                 send_socket.sendto(unacked_packet.encode(), (args.host,args.emulatorPort))
 
                 timer = datetime.now()
@@ -83,11 +79,6 @@ def main(args):
             typ, ack_seqnum, l, ack_data = Packet(ack).decode()
             # check incoming ack
             if (typ == 0):
-                print(f"ACK received for {ack_seqnum}")
-                print(f"Num unacked: {num_unacked}")
-                print(f"Seqnum var: {seqnum}")
-                print(f"Current seqnum: {(seqnum - num_unacked) % 32}")
-                print(f"New ack? {is_between(ack_seqnum, seqnum - num_unacked, seqnum)}")
                 log_ack(timestamp, ack_seqnum)
 
                 # check if it's a new ACK
@@ -116,19 +107,16 @@ def main(args):
 
 
 def log_n(time, N):
-    print(f"t={time} N={N}")
     with open("N.log", "a") as file:
         file.write(f"t={time} {N}\n")
 
 
 def log_seqnum(time, seqnum):
-    # print(f"t={time} seqnum={seqnum}")
     with open("seqnum.log", "a") as file:
         file.write(f"t={time} {seqnum}\n")
 
 
 def log_ack(time, seqnum):
-    # print(f"t={time} ack={seqnum}")
     with open("ack.log", "a") as file:
         file.write(f"t={time} {seqnum}\n")
 
