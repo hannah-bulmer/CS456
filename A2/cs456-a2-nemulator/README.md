@@ -1,5 +1,9 @@
 # CS456-A2 nEmulator
 
+Author: Hannah Bulmer
+
+Student ID: 20714790
+
 ## Instructions
 
 My entire program is written in Python3, which should be installed on the commandline in order to run it. No makefile or compiling is required to run. Files can be run through provided bash scripts.
