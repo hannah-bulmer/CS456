@@ -55,7 +55,7 @@ def main(args):
 
 
 def send_ack_packet(recv_socket, cur_seqnum, host,ePort):
-    print(f"Sending ACK for {(cur_seqnum-1)%32}")
+    # print(f"Sending ACK for {(cur_seqnum-1)%32}")
     ack = Packet(0, (cur_seqnum-1)%32, 0, "")
     recv_socket.sendto(ack.encode(), (host, ePort))
 
