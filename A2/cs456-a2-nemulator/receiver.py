@@ -14,48 +14,53 @@ def main(args):
     cur_seqnum = 0
     buffer = {}
 
+    # setup UDP socket
     recv_socket = socket(AF_INET, SOCK_DGRAM)
     recv_socket.bind(("", args.recvPort))
 
     reset_files()
     
-    print("Ready to receive data from emulator")
+    print("Ready to receive data from sender")
     while True:
         packet, addr = recv_socket.recvfrom(2048)
         typ, seqnum, length, data = Packet(packet).decode()
 
         log(seqnum)
         
-        if seqnum == cur_seqnum:
-            # handle valid packet
-            if typ == 2:
+        if seqnum == cur_seqnum:    # handle valid packet
+            if typ == 2:    # handle EOT
                 print("EOT received. File transfer complete, closing connection.")
                 send_eot_packet(recv_socket, cur_seqnum, args.host, args.emulatorPort)
                 recv_socket.close()
                 break
-            else:
-                # write to file
+
+            else:   # otherwise its a data packet, write to file
                 with open(args.file, "a") as file:
                     file.write(data)
                     cur_seqnum = (cur_seqnum + 1) % 32
+
                     # check buffer for next packets
                     while cur_seqnum in buffer:
                         file.write(buffer[cur_seqnum])
                         buffer.pop(cur_seqnum)
                         cur_seqnum = (cur_seqnum + 1) % 32
+
+                # ack the good packet    
                 send_ack_packet(recv_socket, cur_seqnum, args.host, args.emulatorPort)
-        else:
-            # check this: if the packet is within the next 10
+
+        else:   # handle packets that are out of order
+            # check if packet is within the next 10, if so add to buffer
             if seqnum > cur_seqnum and seqnum <= (cur_seqnum - 10) % 32:
                 buffer[seqnum] = data
-            if seqnum - 1 in buffer:
+            if seqnum - 1 in buffer:    # clear old stuff out of buffer
                 buffer.pop(seqnum-1)
             assert(len(buffer) <= 10)
+
+            # ack expected packet
             send_ack_packet(recv_socket, cur_seqnum, args.host,args.emulatorPort)
 
 
 def send_ack_packet(recv_socket, cur_seqnum, host,ePort):
-    # print(f"Sending ACK for {(cur_seqnum-1)%32}")
     ack = Packet(0, (cur_seqnum-1)%32, 0, "")
     recv_socket.sendto(ack.encode(), (host, ePort))
 
@@ -71,10 +76,13 @@ def log(seqnum):
 
 
 def reset_files():
+    """Empties output and log files before receiver starts"""
+
     raw = open(args.file, "w")
     raw.close()
     raw = open("arrival.log", "w")
     raw.close()
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
