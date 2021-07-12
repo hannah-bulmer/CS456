@@ -29,7 +29,7 @@ def main(args):
         if seqnum == cur_seqnum:
             # handle valid packet
             if typ == 2:
-                print("Received eot. Sending one back")
+                print("EOT received. File transfer complete, closing connection.")
                 send_eot_packet(recv_socket, cur_seqnum, args.host, args.emulatorPort)
                 recv_socket.close()
                 break

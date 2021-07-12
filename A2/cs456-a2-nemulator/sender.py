@@ -29,9 +29,8 @@ def main(args):
                 data = file.read(500)
                 length = len(data)
             if data == b'':
-                print(f"Waiting for {num_unacked} acks still")
                 if num_unacked == 0: # check this
-                    print(f"Sending eot with seqnum {seqnum}")
+                    print("File transfer complete. Sending EOT and closing connection")
                     timestamp += 1
                     log_seqnum(timestamp, seqnum)
 
@@ -84,7 +83,6 @@ def main(args):
                 # check if it's a new ACK
                 if is_between(ack_seqnum, seqnum - num_unacked, seqnum):
                     packets_acked = 1 + ack_seqnum - (seqnum - num_unacked) % 32
-                    print(packets_acked, num_unacked)
                     assert(packets_acked <= num_unacked)
                     num_unacked -= packets_acked
 
