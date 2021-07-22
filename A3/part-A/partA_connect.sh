@@ -29,16 +29,15 @@ done
 ofctl='ovs-ofctl -O OpenFlow13'
 
 # --------------------------------------------------- h2 to h4
-# link from h2 to s2 to s3
-# send from s2 to s3
+
+# for h2
 $ofctl add-flow s2 \
     in_port=1,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:0C:FE:00:04,mod_dl_dst:0A:00:0D:FE:00:02,output=4
 
 $ofctl add-flow s2 \
     in_port=4,ip,nw_src=10.0.4.2,nw_dst=10.0.2.2,actions=mod_dl_src:0A:00:02:01:00:01,mod_dl_dst:0A:00:02:02:00:00,output=1
     
-# link from s3 to s4
-# come from 2, send from s3 to s4 on 3
+# for h3
 $ofctl add-flow s3 \
     in_port=2,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:0E:01:00:03,mod_dl_dst:0A:00:0E:FE:00:02,output=3
 
@@ -46,8 +45,7 @@ $ofctl add-flow s3 \
     in_port=3,ip,nw_src=10.0.4.2,nw_dst=10.0.2.2,actions=mod_dl_src:0A:00:0D:FE:00:02,mod_dl_dst:0A:00:0C:FE:00:04,output=2
 
 
-# link from s4 to h4
-# come from 2, send from s4 to h4 on 1
+# for h4
 $ofctl add-flow s4 \
     in_port=2,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:04:01:00:01,mod_dl_dst:0A:00:04:02:00:00,output=1
 
@@ -64,16 +62,45 @@ $ofctl add-flow s4 \
 # output = on the switch, which out port to use
 
 
+# --------------------------------------------------- h1 to h6
+# s1 to s2, s1 to h1
+$ofctl add-flow s1 \
+    in_port=1,ip,nw_src=10.0.1.2,nw_dst=10.0.6.2,actions=mod_dl_src:0A:00:0C:01:00:03,mod_dl_dst:0A:00:0D:01:00:03,output=3
 
-# link h4 to h2
+$ofctl add-flow s1 \
+    in_port=3,ip,nw_src=10.0.6.2,nw_dst=10.0.1.2,actions=mod_dl_src:0A:00:01:01:00:01,mod_dl_dst:0A:00:01:02:00:00,output=1
 
-# link h1 to h6
+# s2 to s3, s2 to s1
+$ofctl add-flow s2 \
+    in_port=3,ip,nw_src=10.0.1.2,nw_dst=10.0.6.2,actions=mod_dl_src:0A:00:0C:FE:00:04,mod_dl_dst:0A:00:0D:FE:00:02,output=4
 
-# link h6 to h1
+$ofctl add-flow s2 \
+    in_port=4,ip,nw_src=10.0.6.2,nw_dst=10.0.1.2,actions=mod_dl_src:0A:00:0D:01:00:03,mod_dl_dst:0A:00:0C:01:00:03,output=3
 
-# link h0 to h3
+# s3 to s6, s3 to s2
+$ofctl add-flow s3 \
+    in_port=2,ip,nw_src=10.0.1.2,nw_dst=10.0.6.2,actions=mod_dl_src:0A:00:0F:01:00:04,mod_dl_dst:0A:00:0F:FE:00:02,output=4
 
-# link h3 to h0
+$ofctl add-flow s3 \
+    in_port=4,ip,nw_src=10.0.6.2,nw_dst=10.0.1.2,actions=mod_dl_src:0A:00:0D:FE:00:02,mod_dl_dst:0A:00:0C:FE:00:04,output=2
+
+# s6 to h6, s6 to s3
+$ofctl add-flow s6 \
+    in_port=2,ip,nw_src=10.0.1.2,nw_dst=10.0.6.2,actions=mod_dl_src:0A:00:06:01:00:01,mod_dl_dst:0A:00:06:02:00:00,output=1
+
+$ofctl add-flow s6 \
+    in_port=1,ip,nw_src=10.0.6.2,nw_dst=10.0.1.2,actions=mod_dl_src:0A:00:0F:FE:00:02,mod_dl_dst:0A:00:0F:01:00:04,output=2
+
+# --------------------------------------------------- h0 to h3
+
+$ofctl add-flow s0 \
+
+$ofctl add-flow s2 \
+
+$ofctl add-flow s3 \
+
+
+# ----------- end
 
 for switch in s0 s1 s2 s3 s4 s6;
 do
