@@ -36,12 +36,12 @@ $ofctl add-flow s2 \
 
 # link from s3 to s4
 # come from 2, send from s3 to s4 on 3
-$ofctl add-flow s2 \
+$ofctl add-flow s3 \
     in_port=2,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:0E:01:00:03,mod_dl_dst:0A:00:0E:FE:00:02,output=3
 
 # link from s4 to h4
 # come from 2, send from s4 to h4 on 1
-$ofctl add-flow s2 \
+$ofctl add-flow s4 \
     in_port=2,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:04:01:00:01,mod_dl_dst:0A:00:04:02:00:00,output=1
 
 
