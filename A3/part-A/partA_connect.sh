@@ -61,3 +61,10 @@ $ofctl add-flow s2 \ # come from 2, send from s4 to h4 on 1
 # link h0 to h3
 
 # link h3 to h0
+
+for switch in s0 s1 s2 s3 s4 s6;
+do
+    echo "Flows installed in $switch:"
+    $ofctl dump-flows $switch
+    echo ""
+done
