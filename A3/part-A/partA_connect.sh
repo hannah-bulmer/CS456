@@ -32,12 +32,12 @@ ofctl='ovs-ofctl -O OpenFlow13'
 # link from h2 to s2 to s3
 # send from s2 to s3
 $ofctl add-flow s2 \
-    in_port=1,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:0C:FE:00:04,mod_dl_dst:0A:00:0D:FE:00:02,output=4
+    in_port=1,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:0C:FE:00:04,mod_dl_dst:0A:00:0E:FE:00:02,output=4
 
 # link from s3 to s4
 # come from 2, send from s3 to s4 on 3
-$ofctl add-flow s3 \
-    in_port=2,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:0E:01:00:03,mod_dl_dst:0A:00:0E:FE:00:02,output=3
+# $ofctl add-flow s3 \
+#     in_port=2,ip,nw_src=10.0.2.2,nw_dst=10.0.4.2,actions=mod_dl_src:0A:00:0E:01:00:03,mod_dl_dst:0A:00:0E:FE:00:02,output=3
 
 # link from s4 to h4
 # come from 2, send from s4 to h4 on 1
