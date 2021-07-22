@@ -93,11 +93,29 @@ $ofctl add-flow s6 \
 
 # --------------------------------------------------- h0 to h3
 
+# s0 to s2, s0 to h0
 $ofctl add-flow s0 \
+    in_port=1,ip,nw_src=10.0.0.2,nw_dst=10.0.3.2,actions=mod_dl_src:0A:00:0B:01:00:03,mod_dl_dst:0A:00:0B:FE:00:02,output=3
+
+$ofctl add-flow s0 \
+    in_port=3,ip,nw_src=10.0.3.2,nw_dst=10.0.0.2,actions=mod_dl_src:0A:00:00:01:00:01,mod_dl_dst:0A:00:00:02:00:00,output=1
+
+
+# s2 to s3, s2 to s0
+$ofctl add-flow s2 \
+    in_port=2,ip,nw_src=10.0.0.2,nw_dst=10.0.3.2,actions=mod_dl_src:0A:00:0C:FE:00:04,mod_dl_dst:0A:00:0D:FE:00:02,output=4
 
 $ofctl add-flow s2 \
+    in_port=4,ip,nw_src=10.0.3.2,nw_dst=10.0.0.2,actions=mod_dl_src:0A:00:0B:FE:00:02,mod_dl_dst:0A:00:0B:01:00:03,output=2
+
+
+# s3 to h3, s3 to s2
+$ofctl add-flow s3 \
+    in_port=2,ip,nw_src=10.0.0.2,nw_dst=10.0.3.2,actions=mod_dl_src:0A:00:03:01:00:01,mod_dl_dst:0A:00:03:02:00:00,output=1
 
 $ofctl add-flow s3 \
+    in_port=1,ip,nw_src=10.0.3.2,nw_dst=10.0.0.2,actions=mod_dl_src:0A:00:0D:FE:00:02,mod_dl_dst:0A:00:0C:FE:00:04,output=2
+
 
 
 # ----------- end
