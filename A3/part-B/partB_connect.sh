@@ -75,3 +75,11 @@ $ofctl add-flow r1 \
 # connect s0 to alice
 $ofctl add-flow s0 \
     in_port=2,actions=output:1
+
+
+for switch in s0 s1 s2 r1 r2;
+do
+    echo "Flows installed in $switch:"
+    $ofctl dump-flows $switch
+    echo ""
+done
