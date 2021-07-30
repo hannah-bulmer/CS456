@@ -28,6 +28,13 @@ done
 # Avoid having to write "-O OpenFlow13" before all of your ovs-ofctl commands.
 ofctl='ovs-ofctl -O OpenFlow13'
 
+# in_port = port message coming in from 
+# nw_src = message incoming from host
+# nw_dst = message destination host
+# mod_dl_src = MAC addr coming from
+# mod_dl_dst = MAC addr sending to
+# output = on the switch, which out port to use
+
 # --------------------------------------------------- h2 to h4
 
 # for h2
@@ -53,13 +60,6 @@ $ofctl add-flow s4 \
     in_port=1,ip,nw_src=10.0.4.2,nw_dst=10.0.2.2,actions=mod_dl_src:0A:00:0E:FE:00:02,mod_dl_dst:0A:00:0E:01:00:03,output=2
 
 
-
-# in_port = port message coming in from 
-# nw_src = message incoming from host
-# nw_dst = message destination host
-# mod_dl_src = MAC addr coming from
-# mod_dl_dst = MAC addr sending to
-# output = on the switch, which out port to use
 
 
 # --------------------------------------------------- h1 to h6
@@ -90,6 +90,9 @@ $ofctl add-flow s6 \
 
 $ofctl add-flow s6 \
     in_port=1,ip,nw_src=10.0.6.2,nw_dst=10.0.1.2,actions=mod_dl_src:0A:00:0F:FE:00:02,mod_dl_dst:0A:00:0F:01:00:04,output=2
+
+
+
 
 # --------------------------------------------------- h0 to h3
 
