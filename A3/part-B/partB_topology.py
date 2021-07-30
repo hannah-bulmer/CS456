@@ -91,14 +91,14 @@ def run():
 
     # Add routing table entries for hosts (NOTE: The gateway
     # IPs 10.0.X.1 are not assigned to switch interfaces)
-    alice.cmd( 'route add default gw 10.0.0.1 dev alice-eth0' )
-    bob.cmd( 'route add default gw 10.0.1.1 dev bob-eth0' )
-    carol.cmd( 'route add default gw 10.0.2.1 dev carol-eth0' )
+    alice.cmd( 'route add default gw 10.1.1.18 dev alice-eth0' )
+    bob.cmd( 'route add default gw 10.4.4.49 dev bob-eth0' )
+    carol.cmd( 'route add default gw 10.6.6.70 dev carol-eth0' )
 
     # Add arp cache entries for hosts
-    alice.cmd( 'arp -s 10.0.0.1 0A:00:00:01:00:01 -i alice-eth0' )
-    bob.cmd( 'arp -s 10.0.1.1 0A:00:01:01:00:01 -i bob-eth0' )
-    carol.cmd( 'arp -s 10.0.2.1 0A:00:02:01:00:01 -i carol-eth0' )
+    alice.cmd( 'arp -s 10.1.1.18 0A:00:00:01:00:01 -i alice-eth0' )
+    bob.cmd( 'arp -s 10.4.4.49 0A:00:01:01:00:01 -i bob-eth0' )
+    carol.cmd( 'arp -s 10.6.6.70 0A:00:02:01:00:01 -i carol-eth0' )
 
     # Open Mininet Command Line Interface
     CLI(net)
