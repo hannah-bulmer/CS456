@@ -36,9 +36,9 @@ class CSLRTopo( Topo ):
 
         # Add links between switches, with bandwidth 100Mbps
         self.addLink( s0, r1, bw=100 ) 
-        self.addLink( s1, r1, bw=100 ) 
-        self.addLink( s1, r2, bw=100 ) 
-        self.addLink( s2, r2, bw=100 ) 
+        self.addLink( s1, r1, bw=100, port1=1, port2=2 ) 
+        self.addLink( s1, r2, bw=100, port1=3, port2=1 ) 
+        self.addLink( s2, r2, bw=100, port1=1, port2=2 ) 
 
 def run():
     "Create and configure network"
