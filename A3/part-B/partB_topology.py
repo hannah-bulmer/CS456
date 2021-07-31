@@ -30,9 +30,9 @@ class CSLRTopo( Topo ):
         r2 = self.addSwitch( 'r2', listenPort=6638 )
 
         # Add links between hosts and switches
-        self.addLink( alice, s0, port2=1 ) # alice-eth0 <-> s0-eth1
-        self.addLink( bob, s1, port2=2 ) # bob-eth0 <-> s1-eth1
-        self.addLink( carol, s2, port2=2 ) # carol-eth0 <-> s2-eth1
+        self.addLink( alice, s0 ) # alice-eth0 <-> s0-eth1
+        self.addLink( bob, s1 ) # bob-eth0 <-> s1-eth1
+        self.addLink( carol, s2 ) # carol-eth0 <-> s2-eth1
 
         # Add links between switches, with bandwidth 100Mbps
         self.addLink( s0, r1, bw=100 ) 
@@ -61,31 +61,27 @@ def run():
     # Set interface MAC address for switches (NOTE: IP
     # addresses are not assigned to switch interfaces)
     s0 = net.get( 's0' )
-    s0.intf( 's0-eth1' ).setMAC( '0A:00:00:01:00:01' )
-    s0.intf( 's0-eth2' ).setMAC( '0A:00:0A:01:00:02' )
+    s0.intf( 's0-eth1' ).setMAC( '0A:00:00:01:00:01' ) # left
+    s0.intf( 's0-eth2' ).setMAC( '0A:00:0A:01:00:02' ) # right
 
     s1 = net.get( 's1' )
-    s1.intf( 's1-eth1' ).setMAC( '0A:00:01:01:00:01' )
-    s1.intf( 's1-eth2' ).setMAC( '0A:00:0A:FE:00:02' )
-    s1.intf( 's1-eth3' ).setMAC( '0A:00:0C:01:00:03' )
+    s1.intf( 's1-eth1' ).setMAC( '0A:00:01:01:00:01' ) # middle
+    s1.intf( 's1-eth2' ).setMAC( '0A:00:0A:FE:00:02' ) # left
+    s1.intf( 's1-eth3' ).setMAC( '0A:00:0C:01:00:03' ) # right
 
     s2 = net.get( 's2' )
-    s2.intf( 's2-eth1' ).setMAC( '0A:00:02:01:00:01' )
-    s2.intf( 's2-eth2' ).setMAC( '0A:00:0B:FE:00:02' )
+    s2.intf( 's2-eth1' ).setMAC( '0A:00:02:01:00:01' ) # right
+    s2.intf( 's2-eth2' ).setMAC( '0A:00:0B:FE:00:02' ) # left
 
 
     # figure out how to set IP addresses for the "router" swtches
     r1 = net.get( 'r1' )
     r1.intf( 'r1-eth1' ).setMAC( '0A:00:04:01:00:01' ) # left 
-    # r1.intf( 'r1-eth1' ).setIP( '10.1.1.14' , 24 )
     r1.intf( 'r1-eth2' ).setMAC( '0A:00:0E:FE:00:02' ) # right
-    # r1.intf( 'r1-eth2' ).setIP( '10.4.4.14' , 24 )
 
     r2 = net.get( 'r2' )
-    r2.intf( 'r2-eth1' ).setMAC( '0A:00:05:01:00:01' )
-    # r2.intf( 'r2-eth1' ).setIP( '10.4.4.46', 24 ) # left
-    r2.intf( 'r2-eth2' ).setMAC( '0A:00:10:FE:00:02' )
-    # r2.intf( 'r2-eth1' ).setIP( '10.6.6.46', 24 ) # right
+    r2.intf( 'r2-eth1' ).setMAC( '0A:00:05:01:00:01' ) # left
+    r2.intf( 'r2-eth2' ).setMAC( '0A:00:10:FE:00:02' ) # right
 
     net.start()
 
@@ -98,9 +94,9 @@ def run():
 
     # Add arp cache entries for hosts
     alice.cmd( 'arp -s 10.1.1.14 0A:00:00:01:00:01 -i alice-eth0' )
-    bob.cmd( 'arp -s 10.4.4.14 0A:00:0A:FE:00:02 -i bob-eth0' )
-    bob.cmd( 'arp -s 10.4.4.46 0A:00:0A:FE:00:02 -i bob-eth0' )
-    carol.cmd( 'arp -s 10.6.6.46 0A:00:0B:FE:00:02 -i carol-eth0' )
+    bob.cmd( 'arp -s 10.4.4.14 0A:00:01:01:00:01 -i bob-eth0' )
+    bob.cmd( 'arp -s 10.4.4.46 0A:00:01:01:00:01 -i bob-eth0' )
+    carol.cmd( 'arp -s 10.6.6.46 0A:00:02:01:00:01 -i carol-eth0' )
 
     # Open Mininet Command Line Interface
     CLI(net)

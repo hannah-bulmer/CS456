@@ -33,28 +33,28 @@ $ofctl add-flow s0 \
 
 # r1 to s1
 $ofctl add-flow r1 \
-    in_port=1,ip,nw_src=10.1.1.17,nw_dst=10.6.6.69,actions=mod_dl_src:0A:00:0E:FE:00:02,mod_dl_dst:0A:00:01:01:00:01,output=2
+    in_port=1,ip,nw_src=10.1.1.17,nw_dst=10.6.6.69,actions=mod_dl_src:0A:00:0E:FE:00:02,mod_dl_dst:0A:00:0A:FE:00:02,output=2
 
 
 # connect s1 to r2
 $ofctl add-flow s1 \
-    in_port=1,actions=output:3
+    in_port=2,actions=output:3
 
 
 # r2 to s2
 $ofctl add-flow r2 \
-    in_port=1,ip,nw_src=10.1.1.17,nw_dst=10.6.6.69,actions=mod_dl_src:0A:00:10:FE:00:02,mod_dl_dst:0A:00:02:01:00:01,output=2
+    in_port=1,ip,nw_src=10.1.1.17,nw_dst=10.6.6.69,actions=mod_dl_src:0A:00:10:FE:00:02,mod_dl_dst:0A:00:0B:FE:00:02,output=2
 
 
 # connect s2 to carol
 $ofctl add-flow s2 \
-    in_port=1,actions=output:2
+    in_port=2,actions=output:1
 
 #  ------------------- Carol talks to Alice -----------------------
 
 # connect s2 to r2
 $ofctl add-flow s2 \
-    in_port=2,actions=output:1
+    in_port=1,actions=output:2
 
 
 # r2 to s1
@@ -64,7 +64,7 @@ $ofctl add-flow r2 \
 
 # connect s1 to r1
 $ofctl add-flow s1 \
-    in_port=3,actions=output:1
+    in_port=3,actions=output:2
 
 
 # r1 to s0
