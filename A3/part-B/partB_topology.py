@@ -77,28 +77,30 @@ def run():
     # figure out how to set IP addresses for the "router" swtches
     r1 = net.get( 'r1' )
     r1.intf( 'r1-eth1' ).setMAC( '0A:00:04:01:00:01' ) # left 
-    r1.intf( 'r1-eth1' ).setIP( '10.1.1.14' , 24 )
+    # r1.intf( 'r1-eth1' ).setIP( '10.1.1.14' , 24 )
     r1.intf( 'r1-eth2' ).setMAC( '0A:00:0E:FE:00:02' ) # right
-    r1.intf( 'r1-eth2' ).setIP( '10.4.4.14' , 24 )
+    # r1.intf( 'r1-eth2' ).setIP( '10.4.4.14' , 24 )
 
     r2 = net.get( 'r2' )
     r2.intf( 'r2-eth1' ).setMAC( '0A:00:05:01:00:01' )
-    r2.intf( 'r2-eth1' ).setIP( '10.4.4.46', 24 ) # left
+    # r2.intf( 'r2-eth1' ).setIP( '10.4.4.46', 24 ) # left
     r2.intf( 'r2-eth2' ).setMAC( '0A:00:10:FE:00:02' )
-    r2.intf( 'r2-eth1' ).setIP( '10.6.6.46', 24 ) # right
+    # r2.intf( 'r2-eth1' ).setIP( '10.6.6.46', 24 ) # right
 
     net.start()
 
     # Add routing table entries for hosts (NOTE: The gateway
     # IPs 10.0.X.1 are not assigned to switch interfaces)
-    alice.cmd( 'route add default gw 10.1.1.18 dev alice-eth0' )
-    bob.cmd( 'route add default gw 10.4.4.49 dev bob-eth0' )
-    carol.cmd( 'route add default gw 10.6.6.70 dev carol-eth0' )
+    alice.cmd( 'route add default gw 10.1.1.14 dev alice-eth0' )
+    bob.cmd( 'route add default gw 10.4.4.14 dev bob-eth0' )
+    bob.cmd( 'route add default gw 10.4.4.46 dev bob-eth0' )
+    carol.cmd( 'route add default gw 10.6.6.46 dev carol-eth0' )
 
     # Add arp cache entries for hosts
-    alice.cmd( 'arp -s 10.1.1.18 0A:00:00:01:00:01 -i alice-eth0' )
-    bob.cmd( 'arp -s 10.4.4.49 0A:00:0A:FE:00:02 -i bob-eth0' )
-    carol.cmd( 'arp -s 10.6.6.70 0A:00:0B:FE:00:02 -i carol-eth0' )
+    alice.cmd( 'arp -s 10.1.1.14 0A:00:00:01:00:01 -i alice-eth0' )
+    bob.cmd( 'arp -s 10.4.4.14 0A:00:0A:FE:00:02 -i bob-eth0' )
+    bob.cmd( 'arp -s 10.4.4.46 0A:00:0A:FE:00:02 -i bob-eth0' )
+    carol.cmd( 'arp -s 10.6.6.46 0A:00:0B:FE:00:02 -i carol-eth0' )
 
     # Open Mininet Command Line Interface
     CLI(net)
