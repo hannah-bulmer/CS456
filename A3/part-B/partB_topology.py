@@ -30,12 +30,12 @@ class CSLRTopo( Topo ):
         r2 = self.addSwitch( 'r2', listenPort=6638 )
 
         # Add links between hosts and switches
-        self.addLink( alice, s0 ) # alice-eth0 <-> s0-eth1
+        self.addLink( alice, s0, port2=1 ) # alice-eth0 <-> s0-eth1
         self.addLink( bob, s1, port2=2 ) # bob-eth0 <-> s1-eth1
         self.addLink( carol, s2, port2=2 ) # carol-eth0 <-> s2-eth1
 
         # Add links between switches, with bandwidth 100Mbps
-        self.addLink( s0, r1, bw=100 ) 
+        self.addLink( s0, r1, bw=100, port1=2, port2=1 ) 
         self.addLink( s1, r1, bw=100, port1=1, port2=2 ) 
         self.addLink( s1, r2, bw=100, port1=3, port2=1 ) 
         self.addLink( s2, r2, bw=100, port1=1, port2=2 ) 
