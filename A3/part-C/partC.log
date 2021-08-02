@@ -1,0 +1,201 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.19)  2 AUG 2021 13:52
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**"/Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/partC.tex"
+(/Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/partC.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18> (/usr/local/texlive/2021/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2020/04/10 v1.4m Standard LaTeX document class
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count179
+\c@section=\count180
+\c@subsection=\count181
+\c@subsubsection=\count182
+\c@paragraph=\count183
+\c@subparagraph=\count184
+\c@figure=\count185
+\c@table=\count186
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+ (/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count187
+\Gm@cntv=\count188
+\c@Gm@tempcnt=\count189
+\Gm@bindingoffset=\dimen139
+\Gm@wd@mp=\dimen140
+\Gm@odd@mp=\dimen141
+\Gm@even@mp=\dimen142
+\Gm@layoutwidth=\dimen143
+\Gm@layoutheight=\dimen144
+\Gm@layouthoffset=\dimen145
+\Gm@layoutvoffset=\dimen146
+\Gm@dimlist=\toks16
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+ (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen147
+\Gin@req@width=\dimen148
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count190
+\l__pdf_internal_box=\box47
+) (/Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/partC.aux)
+\openout1 = `partC.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(86.72377pt, 440.84746pt, 86.72377pt)
+* v-part:(T,H,B)=(86.72377pt, 621.52245pt, 86.72377pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=440.84746pt
+* \textheight=621.52245pt
+* \oddsidemargin=14.45378pt
+* \evensidemargin=14.45378pt
+* \topmargin=-22.54622pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=65.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count191
+\scratchdimen=\dimen149
+\scratchbox=\box48
+\nofMPsegments=\count192
+\nofMParguments=\count193
+\everyMPshowfont=\toks17
+\MPscratchCnt=\count194
+\MPscratchDim=\dimen150
+\MPnumerator=\count195
+\makeMPintoPDFobject=\count196
+\everyMPtoPDFconversion=\toks18
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (/usr/local/texlive/2021/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+<ping.png, id=1, 724.7075pt x 240.9pt>
+File: ping.png Graphic file (type png)
+<use ping.png>
+Package pdftex.def Info: ping.png  used on input line 23.
+(pdftex.def)             Requested size: 440.85454pt x 146.54443pt.
+<rtt.png, id=3, 504.88625pt x 187.70125pt>
+File: rtt.png Graphic file (type png)
+<use rtt.png>
+Package pdftex.def Info: rtt.png  used on input line 38.
+(pdftex.def)             Requested size: 440.84988pt x 163.8945pt.
+ [1
+
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map} </Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/ping.png> </Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/rtt.png>]
+<s1.png, id=14, 611.28375pt x 200.75pt>
+File: s1.png Graphic file (type png)
+<use s1.png>
+Package pdftex.def Info: s1.png  used on input line 55.
+(pdftex.def)             Requested size: 440.84218pt x 144.77574pt.
+<s2.png, id=15, 606.265pt x 191.71625pt>
+File: s2.png Graphic file (type png)
+<use s2.png>
+Package pdftex.def Info: s2.png  used on input line 61.
+(pdftex.def)             Requested size: 440.84912pt x 139.40758pt.
+<s3s4.png, id=16, 615.29875pt x 266.9975pt>
+File: s3s4.png Graphic file (type png)
+<use s3s4.png>
+Package pdftex.def Info: s3s4.png  used on input line 67.
+(pdftex.def)             Requested size: 440.85536pt x 191.301pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<s5.png, id=17, 612.2875pt x 182.6825pt>
+File: s5.png Graphic file (type png)
+<use s5.png>
+Package pdftex.def Info: s5.png  used on input line 73.
+(pdftex.def)             Requested size: 440.84666pt x 131.53128pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<s6s7.png, id=18, 604.2575pt x 261.97874pt>
+File: s6s7.png Graphic file (type png)
+<use s6s7.png>
+Package pdftex.def Info: s6s7.png  used on input line 79.
+(pdftex.def)             Requested size: 440.84615pt x 191.13097pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[2 </Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/s1.png> </Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/s2.png>] [3 </Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/s3s4.png> </Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/s5.png> </Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/s6s7.png>] (/Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/partC.aux) ) 
+Here is how much of TeX's memory you used:
+ 1728 strings out of 478994
+ 26157 string characters out of 5858184
+ 320558 words of memory out of 5000000
+ 19239 multiletter control sequences out of 15000+600000
+ 404344 words of font info for 30 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 68i,5n,74p,388b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+Output written on "/Users/hannah/Documents/4A/CS 456/assignments/A3/part-C/partC.pdf" (3 pages, 695802 bytes).
+PDF statistics:
+ 41 PDF objects out of 1000 (max. 8388607)
+ 18 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -136,6 +136,14 @@ def build_match_for( source_mac
     the_match.nw_proto = 17
     the_match.tp_src = source_port
     the_match.tp_dst = destination_port
+
+
+    print("Building match for: ")
+    print(f"src mac: {source_mac} \t dst mac: {destination_mac}")
+    print(f"src ip: {source_ip} \t dst ip: {destination_ip}")
+    print(f"src port: {source_port} \t dst port: {destination_port}")
+    print(f"in port: {in_port}")
+
     return the_match
 
 def build_openflow_flowmod(match, output_port):
@@ -156,6 +164,8 @@ def build_openflow_flowmod(match, output_port):
     msg.match = match
     msg.actions.append(of.ofp_action_output(port=output_port))
     msg.priority = 65534
+
+    print(f"Will send along to {output_port}")
     return msg
 
 def install_flowmod_on_switch_with_dpid(flowmod, dpid):
@@ -170,6 +180,9 @@ def install_flowmod_on_switch_with_dpid(flowmod, dpid):
           on the switch.
         - dpid: The DPID of the switch to install the flowmod on.
     """
+
+    print(f"Installing to {dpid}")
+
     core.l2_learning.switch_connections[dpid].send(flowmod)
 
 def get_host_entry(dpid):
@@ -205,7 +218,6 @@ def get_host_ip_from_dpid(dpid):
     """
     host_entry = get_host_entry(dpid)
     return next(iter(host_entry.ipAddrs.keys()))
-
 
 def get_host_mac_from_dpid(dpid):
     """
@@ -278,8 +290,62 @@ def install_udp_middlebox_flow( source_dpid
     # 
     # But remember that your code had to work for _any loopfree_ topology so
     # don't make it specific to this example!
-    print("Hello CS456 Student! You need to add code to this function "
-          "to complete part D of assignment 3!")
+
+    source_ip = get_host_ip_from_dpid(source_dpid)
+    source_mac = get_host_mac_from_dpid(source_dpid)
+    dst_ip = get_host_ip_from_dpid(destination_dpid)
+    dst_mac = get_host_mac_from_dpid(destination_dpid)
+   
+    graph = get_networkx_topology_graph()
+    path_to_middlebox = get_shortest_path_between(graph, source_dpid, middlebox_dpid)
+    path_to_dst = get_shortest_path_between(graph, middlebox_dpid, destination_dpid)
+
+    # any packet goin from src to dst with dst ip goes ONLY to the middle box
+    for i in range(len(path_to_middlebox)):
+        print(f"Currently at switch {path_to_middlebox[i]}")
+
+        src_port = get_input_port(path_to_middlebox, path_to_middlebox[i]) # port on L that connects L back to the one before it
+
+        match = build_match_for(source_mac, dst_mac, source_ip, dst_ip, source_port, destination_port, src_port)
+
+        if i == len(path_to_middlebox) - 1:
+            # handle middlebox case
+            middlebox_port = get_host_port(path_to_middlebox[i])
+            flowmod = build_openflow_flowmod(match, middlebox_port)
+
+        else:
+            print(f"Getting ports connecting {path_to_middlebox[i]} and {path_to_middlebox[i + 1]}")
+            ports = get_ports_connecting(path_to_middlebox[i], path_to_middlebox[i+1])
+            in_port = ports[0] # port on L that connects L to R after it
+            out_port = ports[1] # port on R that connects R back to L
+            print(f"In port: {in_port}, out port: {out_port}")
+            flowmod = build_openflow_flowmod(match, in_port)
+
+        install_flowmod_on_switch_with_dpid(flowmod, path_to_middlebox[i])
+
+
+    # any packet arriving at middle box with src, dst goes ONly to dst
+    for i in range(len(path_to_dst)):
+        print(f"Currently at switch {path_to_dst[i]}")
+
+        src_port = get_input_port(path_to_dst, path_to_dst[i]) # port on L that connects L back to the one before it
+
+        match = build_match_for(source_mac, dst_mac, source_ip, dst_ip, source_port, destination_port, src_port)
+
+        if i == len(path_to_dst) - 1:
+            # handle dst case
+            middlebox_port = get_host_port(path_to_dst[i])
+            flowmod = build_openflow_flowmod(match, middlebox_port)
+
+        else:
+            print(f"Getting ports connecting {path_to_dst[i]} and {path_to_dst[i + 1]}")
+            ports = get_ports_connecting(path_to_dst[i], path_to_dst[i+1])
+            in_port = ports[0] # port on L that connects L to R after it
+            out_port = ports[1] # port on R that connects R back to L
+            print(f"In port: {in_port}, out port: {out_port}")
+            flowmod = build_openflow_flowmod(match, in_port)
+
+        install_flowmod_on_switch_with_dpid(flowmod, path_to_dst[i])
 
 def do_install():
     """
@@ -292,11 +358,11 @@ def do_install():
     run your program.
     """
 
-    source_dpid = None
-    destination_dpid = None
-    middlebox_dpid = None
-    source_port = None
-    destination_port = None
+    source_dpid = 3
+    destination_dpid = 1
+    middlebox_dpid = 7
+    source_port = 7123
+    destination_port = 6123
     install_udp_middlebox_flow(source_dpid, destination_dpid, middlebox_dpid,
             source_port, destination_port)
 
